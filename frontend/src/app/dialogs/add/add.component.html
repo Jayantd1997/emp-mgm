@@ -1,0 +1,107 @@
+<div class="container">
+    <h3 mat-dialog-title>Add new Employee</h3>
+  
+    <form class="mat-dialog-content" (ngSubmit)="submit" #formControl="ngForm">
+  
+      <div class="form">
+          <label class="hoverable" for="fileInput">
+            <img [src]="url ? url : 'https://www.w3schools.com/howto/img_avatar.png'"> 
+            <div class="hover-text">Choose file</div>
+            <div class="background"></div>
+          </label>
+          <br/>
+          <input  id="fileInput" type='file' (change)="onSelectFile($event)">
+          <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+      </div>
+  
+      <div class="form">
+        <mat-form-field color="accent">
+          <textarea matInput #input class="form-control" placeholder="First Name" [(ngModel)]="data.firstName" name="firstName" required></textarea>
+          <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form">
+        <mat-form-field color="accent">
+          <textarea matInput #input class="form-control" placeholder="Last Name" [(ngModel)]="data.lastName" name="lastName" required></textarea>
+          <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="form">
+        <mat-form-field color="accent">
+          <textarea matInput #input class="form-control" placeholder="Email Address" [(ngModel)]="data.email" name="email" required></textarea>
+          <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+        </mat-form-field>
+      </div>
+  
+      <!--Contains mat-hint for characters count and has maxLengt set-->
+      <div class="form">
+        <mat-form-field color="accent">
+          <input matInput #inputstate class="form-control" placeholder="Mobile No" [(ngModel)]="data.contact" name="contact" maxlength="10" required>
+          <mat-error *ngIf="formControl.invalid">{{getErrorMessage()}}</mat-error>
+          <mat-hint align="end">{{inputstate.value.length || 0}}/10</mat-hint>
+        </mat-form-field>
+      </div>
+
+      <div class="form">
+          <mat-form-field appearance="fill">
+            <mat-label>Date of Birth</mat-label>
+            <input matInput id="picker" [matDatepicker]="picker" [(ngModel)]="data.dob">
+            <mat-hint>MM/DD/YYYY</mat-hint>
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+      </div>
+  
+      <div class="form">
+        <mat-form-field>
+          <mat-select placeholder="Country" (selectionChange)="changeCountry($event.value)">
+              <mat-option *ngFor="let country of countries" [value]="country.name">
+                  {{ country.name }}
+              </mat-option>
+          </mat-select>
+      </mat-form-field>
+      </div>
+
+      <div class="form">
+         <mat-form-field>
+          <mat-select placeholder="State" (selectionChange)="changeState($event.value)">
+              <mat-option *ngFor="let state of states" [value]="state">
+                  {{ state}}
+              </mat-option>
+          </mat-select>
+      </mat-form-field>
+      </div>
+
+      <div class="form">
+        <mat-form-field>
+         <mat-select placeholder="City">
+             <mat-option *ngFor="let city of cities" [value]="city">
+                 {{ city}}
+             </mat-option>
+         </mat-select>
+     </mat-form-field>
+     </div>
+  
+      <div class="form">
+        <section>
+          <mat-label>Professional Skills</mat-label><br>
+          <span>
+            <ul>
+              <li *ngFor="let skill of skills">
+                <mat-checkbox>
+                  {{skill}}
+                </mat-checkbox>
+              </li>
+            </ul>
+          </span>
+        </section>
+    </div>
+  
+      <div mat-dialog-actions>
+        <button mat-button (type)="submit" [disabled]="!formControl.valid" [mat-dialog-close]="1" (click)="confirmAdd()">Save</button>
+        <button mat-button (click)="onNoClick()" tabindex="-1">Cancel</button>
+      </div>
+    </form>
+  </div>
